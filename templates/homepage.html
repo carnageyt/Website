@@ -6,30 +6,59 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
-    <h2>Welcome, {{ session['username'] }}</h2>
-    <a href="/add_movie">Add Movie</a>
-    <table>
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Genre</th>
-                <th>Rating</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for movie in movies %}
-            <tr>
-                <td>{{ movie[1] }}</td>
-                <td>{{ movie[2] }}</td>
-                <td>{{ movie[3] }}</td>
-                <td>
-                    <a href="/edit_movie/{{ movie[0] }}">Edit</a>
-                    <a href="/delete_movie/{{ movie[0] }}">Delete</a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <header>
+        <nav>
+            <div class="container">
+                <!-- First div -->
+                <div class="box box1">
+                    <a href="/" id="logo">
+                        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" height="90">
+                    </a>
+                </div>
+        
+                <!-- Second div -->
+                <div class="box box2">
+                    <ul>
+                        <li><a href="/">Movie Review - Home</a></li>
+                        {% if session.get('username') %}
+                            <li><a href="/logout">Logout</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <h2>Welcome, {{ session['username'] }}</h2>
+        
+        <div style="text-align: right;width:89%"><a href="/add_movie">Add Movie</a></div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Genre</th>
+                    <th>Rating</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for movie in movies %}
+                <tr>
+                    <td>{{ movie[1] }}</td>
+                    <td>{{ movie[2] }}</td>
+                    <td>{{ movie[3] }}</td>
+                    <td>
+                        <a href="/edit_movie/{{ movie[0] }}">Edit</a>
+                        &nbsp;|&nbsp;
+                        <a href="/delete_movie/{{ movie[0] }}">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </main>
+    <footer>
+        <p>&copy; 2021 Movie Review</p>
+    </footer>
 </body>
 </html>

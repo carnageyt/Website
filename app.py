@@ -4,7 +4,7 @@ import sqlite3
 
 # Set up Flask app
 myapp = Flask(__name__)
-myapp.secret_key = "your_secret_key"  # Secret key for session management
+myapp.secret_key = "6f2e82f42ac12559a51b8f9d1e3be9e93a5433d2d7b3b710ed5f3d9537f4bb92"  # Secret key for session management
 
 # Get the current file's directory
 currentlocation = os.path.dirname(os.path.abspath(__file__))
@@ -79,6 +79,12 @@ def login():
         finally:
             sqlconnection.close()
     return render_template("login.html")
+
+# Add a logout route
+@myapp.route('/logout')
+def logout():
+    session.pop('username', None)
+    return redirect(url_for('login'))
 
 # Route for the registration page
 @myapp.route("/register", methods=["GET", "POST"])

@@ -6,14 +6,40 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
-    <h2>Register</h2>
-    <form method="POST">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required><br>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required><br>
-        <button type="submit">Register</button>
-    </form>
-    <p>Already have an account? <a href="/login">Login here</a></p>
+    <header>
+        <nav>
+            <div class="container">
+                <!-- First div -->
+                <div class="box box1">
+                    <a href="/" id="logo">
+                        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" height="90">
+                    </a>
+                </div>
+        
+                <!-- Second div -->
+                <div class="box box2">
+                    <ul>
+                        <li><a href="/">Movie Review - Home</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <h2>Register</h2>
+        <form method="POST">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required><br>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required><br>
+            <button type="submit">Register</button>
+        </form>
+        <div style="text-align: center;">
+            <p>Already have an account? <a href="/login">Login here</a></p>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2021 Movie Review</p>
+    </footer>
 </body>
 </html>
