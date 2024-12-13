@@ -71,14 +71,14 @@ input[type="number"] {
     border-radius: 4px;
 }
 
-.mydropdown {
+/* .mydropdown {
     width: 100%;
     padding: 8px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
     font-family: Arial, sans-serif;
-}
+} */
 
 button {
     width: 100%;

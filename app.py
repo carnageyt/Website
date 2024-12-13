@@ -1,4 +1,5 @@
 from flask import Flask, request, render_template, redirect, session, url_for
+from werkzeug.security import generate_password_hash, check_password_hash
 import os
 import sqlite3
 
@@ -64,14 +65,19 @@ def login():
             cursor = sqlconnection.cursor()
 
             # Use a parameterized query for login check
-            query1 = "SELECT username, password FROM users WHERE username = ? AND password = ?"
-            cursor.execute(query1, (UN, PW))
+            query1 = "SELECT username, password FROM users WHERE username = ?"
+            cursor.execute(query1, (UN,))
             rows = cursor.fetchall()
 
             if len(rows) == 1:
-                # Save the user's login in the session
-                session["username"] = UN
-                return redirect("/")
+                stored_username, stored_hashed_password = rows[0]
+                # Verify if the entered password matches the stored hashed password
+                if check_password_hash(stored_hashed_password, PW):
+                    # Save the user's login in the session
+                    session["username"] = UN
+                    return redirect("/")
+                else:
+                    return "Invalid username or password. <a href='/login'>Try again</a>"
             else:
                 return "Invalid username or password. <a href='/login'>Try again</a>"
         except Exception as e:
@@ -93,6 +99,9 @@ def register():
         UN = request.form["username"]
         PW = request.form["password"]
 
+        # Hash the password before storing it
+        hashed_password = generate_password_hash(PW)
+
         try:
             # Connect to the database
             sqlconnection = sqlite3.connect(os.path.join(currentlocation, "WebsiteDatabase.db"))
@@ -100,7 +109,7 @@ def register():
 
             # Insert the new user into the database
             query = "INSERT INTO users (username, password) VALUES (?, ?)"
-            cursor.execute(query, (UN, PW))
+            cursor.execute(query, (UN, hashed_password))
             sqlconnection.commit()
             return redirect("/login")
         except Exception as e:
